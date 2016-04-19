@@ -1,32 +1,17 @@
 'use strict';
 
-var username = "joshtimonen";
-var https = require('https');
+var profile = require("./profile.js");
 
-function printMessage(username, badgeCount, points){
-  var message = username + " has " + badgeCount + " total badge(s) and "
-  + points + " points in Javascript ";
-  console.log(message);
-};
+//call node app.js joshtimonen chalkers
+var users = process.argv.slice(2);
+users.forEach(profile.get);
 
-var request = https.get("https://teamtreehouse.com/" + username
-  + ".json", function(response){
-    console.log(response.statusCode);
-    var body = "";
-    if (response.statusCode == 200) {
-      console.log("Connected");
-      response.on("data", function(chunk){
-        body += chunk;
-      });
-    }
-      else
-      {
-        console.log("Not connected");
-      }
-      response.on("end", function(){
-        var profile = JSON.parse(body);
-        console.log(profile);
-        printMessage(username, profile.badges.length,
-        profile.points.JavaScript);
-      });
-    });
+// var users = ['joshtimonen', 'chalkers' ];
+// users.forEach(profile.get);
+// users.forEach(function(username){
+//   profile.get(username);
+// });
+
+// profile.get("chalkers");
+// profile.get("samarthpaboowal");
+// profile.get("joshtimonen");
